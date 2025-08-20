@@ -8,13 +8,12 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="fixed left-1/2 -translate-x-1/2 top-6 w-[95%] sm:w-[90%] rounded-xl lg:rounded-full bg-[#334727]/10 backdrop-blur-md border border-white/10 shadow-md
-                   px-3 sm:px-4 py-3 z-50">
+        <nav className="fixed left-1/2 -translate-x-1/2 top-6 w-[95%] sm:w-[90%] rounded-xl lg:rounded-full bg-[#334727]/10 backdrop-blur-md border border-white/10 shadow-md px-3 sm:px-4 py-3 z-50">
             <div className="flex justify-between items-center">
                 {/* Logo/Home */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 ml-8 my-1">
                     <Link href="/" className="flex items-center">
-                        <Image src="/logo/logo.svg" alt="Logo" width={28} height={28} className="mr-1" />
+                        <Image src="/logo/logo.svg" alt="Logo" width={28} height={28} className="w-[4rem]" />
                     </Link>
                 </div>
 

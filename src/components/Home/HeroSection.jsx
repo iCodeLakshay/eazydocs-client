@@ -9,7 +9,7 @@ const HeroSection = () => {
                 <div className='p-4 lg:p-7 flex justify-center lg:justify-start items-center order-2 lg:order-1'>
                     <Image 
                         data-aos="fade-right" 
-                        src="/CTA/man-with-laptop.png" 
+                        src="/HomePage/man-with-laptop.png" 
                         alt="Man working on laptop" 
                         className='filter drop-shadow-xl lg:drop-shadow-2xl drop-shadow-black/60 animation-delay-2000 animate-[bounceLow_2s_infinite] w-full max-w-[300px] md:max-w-[400px] lg:max-w-none' 
                         width={500} 
