@@ -5,9 +5,9 @@ import { cardDetails } from '@/Data/WhatWeProvide.data'
 const WhatWeProvide = () => {
   return (
     <div className="py-16 md:py-24 px-4 bg-[#FAF9EE]">
-      <div className="max-w-[85rem] mx-auto">
+      <div className="bricolage-grotesque max-w-[85rem] mx-auto">
         {/* Section Header */}
-        <div className="bricolage-grotesque text-center mb-16" data-aos="fade-up">
+        <div className="text-center mb-16" data-aos="fade-up">
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">What We Provide</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Tools and resources designed to simplify technical documentation for developers and teams.
