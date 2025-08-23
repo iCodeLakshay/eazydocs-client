@@ -59,3 +59,41 @@ body {
   max-width: 400px;
   height: auto;
 }
+
+/* Enhanced Footer Glassy Effects */
+.footer-glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 8px 32px 0 rgba(51, 71, 39, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.footer-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+/* Animated gradient border */
+@keyframes gradient-border {
+  0%, 100% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+}
+
+.animated-border {
+  background: linear-gradient(45deg, #a7c298, #8ba47f, #334727, #a7c298);
+  background-size: 300% 300%;
+  animation: gradient-border 6s ease infinite;
+}
