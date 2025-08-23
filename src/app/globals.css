@@ -36,3 +36,26 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+/* Swiper styles */
+.testimonials-swiper .swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.testimonials-swiper .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 400px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonials-swiper .swiper-slide > div {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
