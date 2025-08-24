@@ -3,7 +3,7 @@ import React from 'react'
 
 const HeroSection = () => {
     return (
-        <div className='w-[95%] lg:w-[90%] mx-auto bg-[#a7c298] text-white rounded-lg mt-20 lg:mt-30'>
+        <div className='w-[95%] lg:w-[90%] mx-auto bg-[#a7c298] text-white rounded-lg mt-30'>
             <div className='grid grid-cols-1 lg:grid-cols-[40%_60%] gap-4 lg:gap-0'>
                 {/* Image section - appears first on mobile, left on desktop */}
                 <div className='p-4 lg:p-7 flex justify-center lg:justify-start items-center order-2 lg:order-1'>
