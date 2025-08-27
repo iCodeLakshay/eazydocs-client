@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const HeroSection = () => {
@@ -7,13 +8,13 @@ const HeroSection = () => {
             <div className='grid grid-cols-1 lg:grid-cols-[40%_60%] gap-4 lg:gap-0'>
                 {/* Image section - appears first on mobile, left on desktop */}
                 <div className='p-4 lg:p-7 flex justify-center lg:justify-start items-center order-2 lg:order-1'>
-                    <Image 
-                        data-aos="fade-right" 
-                        src="/HomePage/man-with-laptop.png" 
-                        alt="Man working on laptop" 
-                        className='filter drop-shadow-xl lg:drop-shadow-2xl drop-shadow-black/60 animation-delay-2000 animate-[bounceLow_2s_infinite] w-full max-w-[300px] md:max-w-[400px] lg:max-w-none' 
-                        width={500} 
-                        height={200} 
+                    <Image
+                        data-aos="fade-right"
+                        src="/HomePage/man-with-laptop.png"
+                        alt="Man working on laptop"
+                        className='filter drop-shadow-xl lg:drop-shadow-2xl drop-shadow-black/60 animation-delay-2000 animate-[bounceLow_2s_infinite] w-full max-w-[300px] md:max-w-[400px] lg:max-w-none'
+                        width={500}
+                        height={200}
                     />
                 </div>
 
@@ -30,12 +31,16 @@ const HeroSection = () => {
                             Make technical docs easy for everyone—write, share, and simplify knowledge for developers worldwide. Join as a blogger and help the community build better documentation together!
                         </p>
                         <div className='flex flex-col sm:flex-row gap-3 mt-4 lg:mt-2 items-center lg:items-start'>
-                            <button className='w-full sm:w-auto border border-white text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 cursor-pointer'>
-                                Become an Author
-                            </button>
-                            <button className='w-full sm:w-auto bg-white text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 cursor-pointer'>
-                                Get Started
-                            </button>
+                            <Link href="/author">
+                                <button className='w-full sm:w-auto border border-white text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 cursor-pointer'>
+                                    Become an Author
+                                </button>
+                            </Link>
+                            <Link href="/register">
+                                <button className='w-full sm:w-auto bg-white text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 cursor-pointer'>
+                                    Get Started
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
