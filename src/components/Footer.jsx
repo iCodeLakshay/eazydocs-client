@@ -30,6 +30,7 @@ const Footer = () => {
                                             width={32} 
                                             height={32} 
                                             className="w-22 h-16"
+                                            priority
                                         />
                                         {/* <div className="absolute -inset-1 bg-gradient-to-r from-[#a7c298] to-[#8ba47f] rounded-full blur opacity-30 animate-pulse"></div> */}
                                     </div>

@@ -15,7 +15,7 @@ const Navbar = () => {
                 {/* Logo/Home */}
                 <div className="flex items-center gap-2 ml-8 my-1">
                     <Link href="/" className="flex items-center">
-                        <Image src="/logo/logo.svg" alt="Logo" width={28} height={28} className="w-[4rem]" />
+                        <Image src="/logo/logo.svg" alt="Logo" width={28} height={28} className="w-[4rem]" priority />
                     </Link>
                 </div>
 

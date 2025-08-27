@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Eye, EyeOff, Mail, Lock, ArrowLeft, LogIn } from 'lucide-react'
 import { login } from '@/Utils/Server'
 import ForgotPasswordModal from './ForgotPasswordModal'
+import toast from 'react-hot-toast'
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -12,7 +13,6 @@ const Login = () => {
     })
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
     const [showForgotPassword, setShowForgotPassword] = useState(false)
 
     const handleChange = (e) => {
@@ -20,24 +20,22 @@ const Login = () => {
             ...formData,
             [e.target.name]: e.target.value
         })
-        if (error) setError('')
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        setError('')
 
         try {
             const result = await login(formData.email, formData.password)
             if (result) {
-                // Redirect to dashboard or home
+                toast.success('Logged in successfully!')
                 window.location.href = '/'
             } else {
-                setError('Invalid email or password')
+                toast.error('Invalid email or password')
             }
         } catch (err) {
-            setError('Something went wrong. Please try again.')
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setLoading(false)
         }
@@ -53,13 +51,6 @@ const Login = () => {
                         <h1 className="text-5xl font-bold text-white mb-2">Welcome Back</h1>
                         <p className="text-white/80">Sign in to your account</p>
                     </div>
-
-                    {/* Error Message */}
-                    {error && (
-                        <div className="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg mb-6">
-                            {error}
-                        </div>
-                    )}
 
                     {/* Login Form */}
                     <form onSubmit={handleSubmit} className="space-y-6">

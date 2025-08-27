@@ -2,7 +2,7 @@ import axiosInstance from "./axiosInstance"
 
 export const fetchUser = async () => {
     try {
-        const response = await axiosInstance.get("/api/me")
+        const response = await axiosInstance.get("/api/auth/me")
         return response.data.user || null;
     } catch (error) {
         console.error("Error fetching user", error);

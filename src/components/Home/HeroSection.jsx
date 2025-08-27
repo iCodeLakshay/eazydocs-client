@@ -15,6 +15,7 @@ const HeroSection = () => {
                         className='filter drop-shadow-xl lg:drop-shadow-2xl drop-shadow-black/60 animation-delay-2000 animate-[bounceLow_2s_infinite] w-full max-w-[300px] md:max-w-[400px] lg:max-w-none'
                         width={500}
                         height={200}
+                        priority
                     />
                 </div>
 

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft, UserPlus } from 'lucide-react'
 import { signup } from '@/Utils/Server'
 import EmailVerificationModal from './EmailVerificationModal'
+import toast from 'react-hot-toast'
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -16,7 +17,6 @@ const Signup = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
     const [showEmailVerification, setShowEmailVerification] = useState(false)
 
     const handleChange = (e) => {
@@ -24,16 +24,15 @@ const Signup = () => {
             ...formData,
             [e.target.name]: e.target.value
         })
-        if (error) setError('')
     }
 
     const validateForm = () => {
         if (formData.password !== formData.confirmPassword) {
-            setError('Passwords do not match')
+            toast.error('Passwords do not match')
             return false
         }
         if (formData.password.length < 6) {
-            setError('Password must be at least 6 characters long')
+            toast.error('Password must be at least 6 characters long')
             return false
         }
         return true
@@ -45,7 +44,6 @@ const Signup = () => {
         if (!validateForm()) return
 
         setLoading(true)
-        setError('')
 
         try {
             const result = await signup(
@@ -56,12 +54,13 @@ const Signup = () => {
             )
             
             if (result) {
+                toast.success('Account created successfully!')
                 setShowEmailVerification(true)
             } else {
-                setError('Failed to create account. Please try again.')
+                toast.error('Failed to create account. Please try again.')
             }
         } catch (err) {
-            setError('Something went wrong. Please try again.')
+            toast.error('Something went wrong. Please try again.')
         } finally {
             setLoading(false)
         }
