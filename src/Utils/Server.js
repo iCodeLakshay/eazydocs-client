@@ -34,3 +34,13 @@ export const signup = async(email, password, name, phone_number) => {
         return null;
     }
 }
+
+export const logout = async () => {
+    try {
+        const response = await axiosInstance.get("/api/auth/logout");
+        return response.data;
+    } catch (error) {
+        console.error("Error logging out", error);
+        return null;
+    }
+}

@@ -2,9 +2,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Link from "next/link";
 import { UserProvider } from "@/Utils/userContext";
 import { Toaster } from "react-hot-toast";
+import { HeroUIProvider } from "@heroui/system";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,13 +34,16 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet"></link>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-y-scroll`}
       >
+        <HeroUIProvider>
+
         <UserProvider>
           <Navbar />
           {children}
           <Footer />
         </UserProvider>
+        </HeroUIProvider>
         <Toaster />
       </body>
     </html>
