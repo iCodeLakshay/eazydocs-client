@@ -69,9 +69,9 @@ const TopicCard = ({ topic, gridPosition }) => {
         src={topic.image || "/placeholder/placeholder.svg"} 
         alt={topic.title} 
         width={400}
-        height={250}
-        className="object-cover object-center w-full h-auto group-hover:scale-105 transition-transform duration-500"
-        priority
+        height={300}
+        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+        style={{ width: '100%', height: 'auto' }}
       />
       
       {/* Content */}

@@ -7,7 +7,7 @@ import { testimonials } from '@/Data/Testimonials.data';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper modules
-import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+import { Autoplay, EffectCoverflow } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -116,6 +116,7 @@ const TestimonialCard = ({ testimonial }) => {
             width={48}
             height={48}
             className="rounded-full object-cover ring-2 ring-[#a7c298]/20"
+            style={{ width: '60px', height: '60px' }}
           />
           <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
         </div>

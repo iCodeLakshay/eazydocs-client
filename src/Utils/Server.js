@@ -3,9 +3,14 @@ import axiosInstance from "./axiosInstance"
 export const fetchUser = async () => {
     try {
         const response = await axiosInstance.get("/api/auth/me")
+        
         return response.data.user || null;
     } catch (error) {
-        console.error("Error fetching user", error);
+        if(error.response.data.error === "Not Authenticated") {
+            console.log("User is not authenticated");
+        } else {
+            console.error("Error fetching user", error);
+        }
         return null;
     }
 }

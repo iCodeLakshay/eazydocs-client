@@ -10,10 +10,10 @@ const Navbar = () => {
     const { user, loading } = useUser();
 
     return (
-        <nav className="fixed left-1/2 -translate-x-1/2 top-6 w-[95%] sm:w-[90%] rounded-xl lg:rounded-full bg-[#334727]/10 backdrop-blur-md border border-white/10 shadow-md px-3 sm:px-4 py-3 z-50">
-            <div className="flex justify-between items-center">
+        <nav className="fixed left-1/2 -translate-x-1/2 top-4 w-[95%] sm:w-[90%] rounded-xl lg:rounded-full bg-[#334727]/10 backdrop-blur-md border border-white/10 shadow-md px-3 sm:px-4 py-3 z-50">
+            <div className="flex justify-between items-center w-[98%] mx-auto">
                 {/* Logo/Home */}
-                <div className="flex items-center gap-2 ml-8 my-1">
+                <div className="flex items-center gap-2 my-1">
                     <Link href="/" className="flex items-center">
                         <Image src="/logo/logo.svg" alt="Logo" width={28} height={28} className="w-[4rem]" priority />
                     </Link>
@@ -31,7 +31,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Desktop Search & CTA */}
-                <div className="hidden md:flex items-center gap-3 lg:gap-8">
+                <div className="hidden md:flex items-center gap-3 lg:gap-4 mr-">
                     <div className='flex items-center border border-gray-300 rounded-full px-3 lg:px-4 py-1.5 lg:py-2'>
                         <input
                             type="text"
@@ -40,11 +40,13 @@ const Navbar = () => {
                         />
                         <Search className='text-gray-400 size-4' />
                     </div>
+
+                    {/* Login/Signup button or User Profile section */}
                     {!loading && (
                         user ? (
-                            <Link href="/write" className="bg-[#334727] hover:bg-[#435f37] text-white transition-all font-medium lg:text-md px-3 lg:px-5 py-1.5 lg:py-2 rounded-full">
-                                Get Started
-                            </Link>
+                            <button className="w-fit border-4 border-[#a8b79e] bg-[#334727] hover:bg-[#435f37] rounded-full">
+                                <Image src="/placeholder/profile.jpg" alt="Logo" width={50} height={50} className=" rounded-full" />
+                            </button>
                         ) : (
                             <Link href="/login" className="bg-[#334727] hover:bg-[#435f37] text-white transition-all font-medium lg:text-md px-3 lg:px-5 py-1.5 lg:py-2 rounded-full">
                                 Log In/Sign Up
