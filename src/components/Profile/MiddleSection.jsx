@@ -21,7 +21,7 @@ const MiddleSection = () => {
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
       {/* Contact Links Section */}
-      <Card className="shadow-lg border-0 bg-white" data-aos="fade-up">
+      <Card className="shadow-lg border-0 bg-white rounded-2xl" data-aos="fade-up">
         <CardBody className="p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
             <div className="w-2 h-6 bg-[#2b3824] rounded-full"></div>
@@ -50,7 +50,7 @@ const MiddleSection = () => {
       </Card>
 
       {/* Stats Section */}
-      <Card className="shadow-lg border-0 bg-white" data-aos="fade-up" data-aos-delay="200">
+      <Card className="shadow-lg border-0 bg-white rounded-2xl" data-aos="fade-up" data-aos-delay="200">
         <CardBody className="p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
             <div className="w-2 h-6 bg-[#2b3824] rounded-full"></div>
