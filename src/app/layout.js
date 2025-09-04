@@ -37,7 +37,6 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-y-scroll bg-[#FAF9EE]`}
       >
         <HeroUIProvider>
-
         <UserProvider>
           <Navbar />
           {children}
