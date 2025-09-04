@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        email: '',
+        identifier: '',
         password: ''
     })
     const [showPassword, setShowPassword] = useState(false)
@@ -27,12 +27,12 @@ const Login = () => {
         setLoading(true)
 
         try {
-            const result = await login(formData.email, formData.password)
+            const result = await login(formData.identifier, formData.password)
             if (result) {
                 toast.success('Logged in successfully!')
                 window.location.href = '/'
             } else {
-                toast.error('Invalid email or password')
+                toast.error('Invalid credentials. Please try again.')
             }
         } catch (err) {
             toast.error('Something went wrong. Please try again.')
@@ -54,18 +54,18 @@ const Login = () => {
 
                     {/* Login Form */}
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Email Field */}
+                        {/* Email/Username Field */}
                         <div>
-                            <label className="block text-white font-medium mb-2">Email</label>
+                            <label className="block text-white font-medium mb-2">Email/Username:</label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                 <input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
+                                    type="text"
+                                    name="identifier"
+                                    value={formData.identifier}
                                     onChange={handleChange}
                                     className="w-full pl-10 pr-4 py-3 bg-white rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#334727] focus:border-transparent outline-none transition-all"
-                                    placeholder="Enter your email"
+                                    placeholder="Enter your email or username"
                                     required
                                 />
                             </div>
@@ -99,8 +99,9 @@ const Login = () => {
                         <div className="text-right">
                             <button
                                 type="button"
+                                disabled={true}
                                 onClick={() => setShowForgotPassword(true)}
-                                className="text-white/80 hover:text-white transition-colors text-sm underline"
+                                className="cursor-not-allowed text-white/80 hover:text-white transition-colors text-sm underline"
                             >
                                 Forgot Password?
                             </button>

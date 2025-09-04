@@ -3,21 +3,18 @@ import axiosInstance from "./axiosInstance"
 export const fetchUser = async () => {
     try {
         const response = await axiosInstance.get("/api/auth/me")
-        
         return response.data.user || null;
     } catch (error) {
-        if(error.response.data.error === "Not Authenticated") {
+        if(error.response.data.error) {
             console.log("User is not authenticated");
-        } else {
-            console.error("Error fetching user", error);
         }
         return null;
     }
 }
 
-export const login = async(email, password) => {
+export const login = async(identifier, password) => {
     try {
-        const response = await axiosInstance.post("/api/auth/login", { email, password });
+        const response = await axiosInstance.post("/api/auth/login", { identifier, password });
         return response.data;
     } catch (error) {
         console.error("Error logging in", error);

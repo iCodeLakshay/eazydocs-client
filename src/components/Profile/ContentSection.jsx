@@ -6,7 +6,7 @@ import { Chip } from "@heroui/chip"
 import { Pin, Calendar, Clock, ArrowRight, Star } from 'lucide-react'
 import Link from 'next/link'
 
-const ContentSection = () => {
+const ContentSection = ({user}) => {
   // Mock data for recent blogs
   const recentBlogs = [
     {

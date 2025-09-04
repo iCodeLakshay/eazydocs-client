@@ -2,7 +2,7 @@
 import React from 'react'
 import { Avatar } from "@heroui/avatar"
 
-const TopSection = () => {
+const TopSection = ({user}) => {
   return (
     <div className="w-full bg-[#a7c298] rounded-lg shadow-xl">
       <div className="p-8 md:p-12">
@@ -25,21 +25,21 @@ const TopSection = () => {
             <div className="space-y-3">
               {/* Name */}
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
-                John Doe
+                {user ? user.name : 'John Doe'}
               </h1>
               
               {/* Username */}
               <p className="text-lg md:text-xl text-gray-700 font-medium">
-                @johndoe_dev
+                {user ? `@${user.username}` : '@johndoe_dev'}
               </p>
               
               {/* Bio/Tagline */}
               <div className="mt-4">
                 <p className="text-base md:text-lg text-gray-800 max-w-2xl mx-auto md:mx-0 leading-relaxed">
-                  Tech Blogger | Sharing insights on software & startups
+                  {user ? user.tagline : 'Add your tagline here'}
                 </p>
                 <p className="text-sm md:text-base text-gray-700 max-w-2xl mx-auto md:mx-0 mt-2">
-                  Passionate about creating clean code and sharing knowledge with the developer community
+                  {user ? user.biography : 'Add your bio here...'}
                 </p>
               </div>
 

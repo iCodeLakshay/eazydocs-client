@@ -3,7 +3,7 @@ import React from 'react'
 import { Card, CardBody } from "@heroui/card"
 import { Mail, Globe, Github, Twitter, Calendar, FileText, Users, TrendingUp } from 'lucide-react'
 
-const MiddleSection = () => {
+const MiddleSection = ({user}) => {
   const contactLinks = [
     { icon: Mail, label: 'Email', value: 'john@example.com', href: 'mailto:john@example.com' },
     { icon: Globe, label: 'Website', value: 'johndoe.dev', href: 'https://johndoe.dev' },
@@ -28,7 +28,7 @@ const MiddleSection = () => {
             Contact & Links
           </h2>
           <div className="space-y-4">
-            {contactLinks.map((link, index) => (
+            { user?.social_links?.map((link, index) => (
               <a
                 key={index}
                 href={link.href}
