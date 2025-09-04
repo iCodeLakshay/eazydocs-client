@@ -4,7 +4,7 @@ import React from 'react';
 
 const SearchAndExplore = () => {
   return (
-    <div className="bricolage-grotesque py-16 md:py-16 px-4 bg-[#FAF9EE]">
+    <div className="bricolage-grotesque py-16 md:py-16 px-4">
       <div className="max-w-7xl mx-auto" data-aos="fade-up">
         <div className="relative bg-gradient-to-r from-[#a7c298] to-[#8ba47f] rounded-2xl shadow-xl overflow-hidden">
           {/* Decorative dots */}

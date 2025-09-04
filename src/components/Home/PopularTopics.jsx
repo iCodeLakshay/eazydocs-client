@@ -5,7 +5,7 @@ import { popularTopics } from '@/Data/popularTopics.data'
 
 const PopularTopics = () => {
   return (
-    <div className="py-16 md:py-16 px-4 bg-[#FAF9EE]">
+    <div className="py-16 md:py-16 px-4">
       <div className="bricolage-grotesque max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 md:mb-16" data-aos="fade-up">

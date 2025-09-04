@@ -16,7 +16,7 @@ import 'swiper/css/pagination';
 
 const Testimonials = () => {
   return (
-    <section className="py-16 md:pt-24 px-4 bg-[#FAF9EE]">
+    <section className="py-16 md:pt-24 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="bricolage-grotesque  text-center mb-12" data-aos="fade-up">

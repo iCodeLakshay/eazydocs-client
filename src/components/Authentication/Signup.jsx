@@ -87,13 +87,6 @@ const Signup = () => {
                         <p className="text-white/80">Join our community of developers</p>
                     </div>
 
-                    {/* Error Message */}
-                    {error && (
-                        <div className="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg mb-6">
-                            {error}
-                        </div>
-                    )}
-
                     {/* Signup Form */}
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Name Field */}

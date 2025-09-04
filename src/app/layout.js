@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet"></link>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-y-scroll`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-y-scroll bg-[#FAF9EE]`}
       >
         <HeroUIProvider>
 

@@ -1,8 +1,12 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { useUser } from '@/Utils/userContext'
 
 const HeroSection = () => {
+    const { user } = useUser();
+
     return (
         <div className='w-[95%] lg:w-[90%] mx-auto bg-[#a7c298] text-white rounded-lg mt-30'>
             <div className='grid grid-cols-1 lg:grid-cols-[40%_60%] gap-4 lg:gap-0'>
@@ -32,12 +36,12 @@ const HeroSection = () => {
                             Make technical docs easy for everyone—write, share, and simplify knowledge for developers worldwide. Join as a blogger and help the community build better documentation together!
                         </p>
                         <div className='flex flex-col sm:flex-row gap-3 mt-4 lg:mt-2 items-center lg:items-start'>
-                            <Link href="/author">
+                            <Link href={`${user ? '/author' : '/login'}`}>
                                 <button className='w-full sm:w-auto border border-white text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 cursor-pointer'>
                                     Become an Author
                                 </button>
                             </Link>
-                            <Link href="/register">
+                            <Link href="/signup">
                                 <button className='w-full sm:w-auto bg-white text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 cursor-pointer'>
                                     Get Started
                                 </button>

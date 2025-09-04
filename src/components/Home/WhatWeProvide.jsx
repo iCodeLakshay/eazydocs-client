@@ -4,7 +4,7 @@ import { cardDetails } from '@/Data/WhatWeProvide.data'
 
 const WhatWeProvide = () => {
   return (
-    <div className="py-16 md:py-24 px-4 bg-[#FAF9EE]">
+    <div className="py-16 md:py-24 px-4 ">
       <div className="bricolage-grotesque max-w-[85rem] mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16" data-aos="fade-up">
