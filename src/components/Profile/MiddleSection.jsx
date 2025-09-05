@@ -28,23 +28,53 @@ const MiddleSection = ({user}) => {
             Contact & Links
           </h2>
           <div className="space-y-4">
-            { user?.social_links?.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition duration-200 group"
-              >
-                <div className="w-10 h-10 bg-[#2b3824]/20 rounded-full flex items-center justify-center group-hover:bg-[#2b3824] transition duration-200">
-                  <link.icon className="w-5 h-5 text-[#2b3824] group-hover:text-white transition duration-200" />
-                </div>
-                <div className="flex-grow">
-                  <p className="text-sm text-gray-600">{link.label}</p>
-                  <p className="font-medium text-gray-900">{link.value}</p>
-                </div>
-              </a>
-            ))}
+            {!user?.social_links || user.social_links.length === 0 ? (
+              // Default contact links when no social links are set
+              contactLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition duration-200 group"
+                >
+                  <div className="w-10 h-10 bg-[#2b3824]/20 rounded-full flex items-center justify-center group-hover:bg-[#2b3824] transition duration-200">
+                    <link.icon className="w-5 h-5 text-[#2b3824] group-hover:text-white transition duration-200" />
+                  </div>
+                  <div className="flex-grow">
+                    <p className="text-sm text-gray-600">{link.label}</p>
+                    <p className="font-medium text-gray-900">{link.value}</p>
+                  </div>
+                </a>
+              ))
+            ) : (
+              // User's custom social links
+              user.social_links.map((link, index) => {
+                const IconComponent = link.icon === 'Mail' ? Mail : 
+                                    link.icon === 'Github' ? Github :
+                                    link.icon === 'Twitter' ? Twitter :
+                                    link.icon === 'Linkedin' ? Github : // You can add Linkedin icon if needed
+                                    link.icon === 'Instagram' ? Github : // You can add Instagram icon if needed
+                                    Globe;
+                return (
+                  <a
+                    key={index}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition duration-200 group"
+                  >
+                    <div className="w-10 h-10 bg-[#2b3824]/20 rounded-full flex items-center justify-center group-hover:bg-[#2b3824] transition duration-200">
+                      <IconComponent className="w-5 h-5 text-[#2b3824] group-hover:text-white transition duration-200" />
+                    </div>
+                    <div className="flex-grow">
+                      <p className="text-sm text-gray-600">{link.label}</p>
+                      <p className="font-medium text-gray-900">{link.value}</p>
+                    </div>
+                  </a>
+                )
+              })
+            )}
           </div>
         </CardBody>
       </Card>

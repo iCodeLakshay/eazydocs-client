@@ -50,11 +50,12 @@ const ContentSection = ({user}) => {
     likes: "240"
   }
 
-  // Categories/Tags
+  // Categories/Tags - use user's topics if available, otherwise default ones
   const categories = [
     "React", "Node.js", "JavaScript", "Python", "Database", "DevOps", 
     "Web Development", "Mobile Development", "AI/ML", "Cloud Computing"
   ]
+  const displayTopics = user?.topics && user.topics.length > 0 ? user.topics : categories
 
   return (
     <div className="w-full space-y-8 mt-8">
@@ -132,7 +133,7 @@ const ContentSection = ({user}) => {
           </h2>
           
           <div className="flex flex-wrap gap-2">
-            {categories.map((category, index) => (
+            {displayTopics.map((category, index) => (
               <Chip
                 key={index}
                 variant="flat"

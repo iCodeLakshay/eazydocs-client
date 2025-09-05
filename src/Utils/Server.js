@@ -41,3 +41,13 @@ export const logout = async () => {
         return null;
     }
 }
+
+export const updateUserProfile = async (userId, updatedData) => {
+    try{
+        const response = await axiosInstance.put(`/api/user/${userId}`, updatedData);
+        return response.data;
+    }catch(error){
+        console.error("Error updating user profile", error);
+        return null;
+    }
+}
