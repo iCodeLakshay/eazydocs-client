@@ -2,29 +2,12 @@
 import React, { useState } from 'react'
 import { Avatar } from "@heroui/avatar"
 import EditProfileModal from './EditProfileModal'
-import { updateUserProfile } from '@/Utils/Server'
-import toast from 'react-hot-toast'
 import { useUser } from '@/Utils/userContext'
 
-const TopSection = ({user}) => {
+const TopSection = ({ user }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const { setUser } = useUser();
   const [loading, setLoading] = useState(false);
-
-  const handleSaveProfile = async (updatedData) => {
-    setLoading(true);
-    const response = await updateUserProfile(user.id, updatedData);
-    console.log("Update Response:", response);
-    
-    if(response){
-      setUser(response.user);
-      toast.success('Profile updated successfully');
-      setIsEditModalOpen(false);
-    } else {
-      toast.error('Failed to update profile');
-    }
-    setLoading(false);
-  }
 
   return (
     <>
@@ -35,9 +18,9 @@ const TopSection = ({user}) => {
             <div className="flex-shrink-0" data-aos="fade-right">
               <div className="relative">
                 <Avatar
-                  src={user?.profile_picture || "/placeholder/profile.jpg"}
+                  src={typeof user?.profile_picture === 'string' && user.profile_picture ? user.profile_picture : '/placeholder/placeholder.svg'}
                   alt="Profile Picture"
-                  className="w-32 h-32 md:w-40 md:h-40 text-large border-4 border-white shadow-xl"
+                  className="w-32 h-32 md:w-40 md:h-40 text-large border-4 border-[#4c643f] shadow-xl opacity-100"
                 />
                 {/* Online indicator (optional) */}
                 <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-500 border-4 border-white rounded-full"></div>
@@ -51,12 +34,12 @@ const TopSection = ({user}) => {
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
                   {user ? user.name : 'John Doe'}
                 </h1>
-                
+
                 {/* Username */}
                 <p className="text-lg md:text-xl text-gray-700 font-medium">
                   {user ? `@${user.username}` : '@johndoe_dev'}
                 </p>
-                
+
                 {/* Bio/Tagline */}
                 <div className="mt-4">
                   <p className="text-base md:text-lg text-gray-800 max-w-2xl mx-auto md:mx-0 leading-relaxed">
@@ -69,7 +52,7 @@ const TopSection = ({user}) => {
 
                 {/* Quick Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 mt-6 justify-center md:justify-start">
-                  <button 
+                  <button
                     onClick={() => setIsEditModalOpen(true)}
                     className="px-6 py-2 cursor-pointer bg-white text-[#2b3824] font-bold rounded-lg shadow-md hover:shadow-lg transition duration-200 hover:bg-gray-50"
                   >
@@ -90,8 +73,9 @@ const TopSection = ({user}) => {
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         user={user}
-        onSave={handleSaveProfile}
+        onSave={setUser}
         loading={loading}
+        setLoading={setLoading}
       />
     </>
   )

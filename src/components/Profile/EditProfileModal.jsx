@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { X, Plus, Trash2, Globe, Github, Twitter, Mail, Linkedin, Instagram } from 'lucide-react'
+import { X, Plus, Trash2, Globe, Github, Twitter, Mail, Linkedin, Instagram, Upload, User } from 'lucide-react'
+import { updateUserProfile } from '@/Utils/Server';
+import toast from 'react-hot-toast';
 
-const EditProfileModal = ({ isOpen, onClose, user, onSave, loading }) => {
+const EditProfileModal = ({ isOpen, onClose, user, onSave, loading, setLoading }) => {
   const [formData, setFormData] = useState({
     name: user?.name || '',
     username: user?.username || '',
@@ -14,6 +16,8 @@ const EditProfileModal = ({ isOpen, onClose, user, onSave, loading }) => {
 
   const [newTopic, setNewTopic] = useState('')
   const [newSocialLink, setNewSocialLink] = useState({ label: '', value: '', href: '', icon: 'Globe' })
+  const [profilePictureFile, setProfilePictureFile] = useState(null)
+  const [profilePicturePreview, setProfilePicturePreview] = useState(user?.profile_picture || '')
 
   const socialIcons = {
     Globe: Globe,
@@ -35,6 +39,21 @@ const EditProfileModal = ({ isOpen, onClose, user, onSave, loading }) => {
       ...prev,
       [field]: value
     }))
+  }
+
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      setProfilePictureFile(file)
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file)
+      setProfilePicturePreview(previewUrl)
+      // Add file to form data for backend
+      setFormData(prev => ({
+        ...prev,
+        profile_picture: file
+      }))
+    }
   }
 
   const addSocialLink = () => {
@@ -87,10 +106,36 @@ const EditProfileModal = ({ isOpen, onClose, user, onSave, loading }) => {
     }))
   }
 
-  const handleSave = () => {
-    onSave(formData)
-    onClose()
-  }
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+
+      // Prepare data for submission - NO profile_picture field here
+      const submitData = {
+        name: formData.name,
+        tagline: formData.tagline, 
+        biography: formData.biography,
+        social_links: formData.social_links,
+        topics: formData.topics,
+      };
+
+      // Only add the FILE if user selected one
+      if (profilePictureFile) {
+        submitData.profile_picture_file = profilePictureFile;
+      }
+
+      const response = await updateUserProfile(user.id, submitData);
+      
+      toast.success('Profile updated successfully!');
+      if (onSave) onSave(response.user);
+      onClose();
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast.error(error.message || 'Failed to update profile');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!isOpen) return null
 
@@ -115,6 +160,46 @@ const EditProfileModal = ({ isOpen, onClose, user, onSave, loading }) => {
               Basic Information
             </h3>
             <div className="space-y-4">
+              {/* Profile Picture Upload */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Profile Picture</label>
+                <div className="flex items-center gap-4">
+                  {/* Current/Preview Image */}
+                  <div className="relative">
+                    {profilePicturePreview ? (
+                      <img
+                        src={profilePicturePreview}
+                        alt="Profile preview"
+                        className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
+                      />
+                    ) : (
+                      <div className="w-20 h-20 rounded-full bg-gray-200 border-4 border-gray-300 flex items-center justify-center">
+                        <User className="w-8 h-8 text-gray-400" />
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Upload Button */}
+                  <div className="flex-1">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleProfilePictureChange}
+                      className="hidden"
+                      id="profile-picture-input"
+                    />
+                    <label
+                      htmlFor="profile-picture-input"
+                      className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer transition-colors"
+                    >
+                      <Upload className="w-4 h-4" />
+                      {profilePictureFile ? 'Change Picture' : 'Upload Picture'}
+                    </label>
+                    <p className="text-xs text-gray-500 mt-1">JPG, PNG, JPEG up to 5MB</p>
+                  </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -311,7 +396,7 @@ const EditProfileModal = ({ isOpen, onClose, user, onSave, loading }) => {
               Cancel
             </button>
             <button
-              onClick={handleSave}
+              onClick={handleSubmit}
               className={`px-6 py-2 ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#2b3824]'} text-white rounded-lg hover:bg-[#384d2d] transition-colors font-medium`}
               disabled={loading}
             >

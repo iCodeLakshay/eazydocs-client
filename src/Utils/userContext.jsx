@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         const getUser = async () => {
             const fetchedUser = await fetchUser();
-            console.log("Fetched User:", fetchedUser);
+            // console.log("Fetched User:", fetchedUser);
             
             setUser(fetchedUser);
             setLoading(false);

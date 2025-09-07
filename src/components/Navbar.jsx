@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { Search, Menu, X } from 'lucide-react';
+import { Avatar } from "@heroui/avatar";
 import { useUser } from '@/Utils/userContext'
 import { ProfileDropdownMenu } from './Others/ProfileDropdownMenu';
 
@@ -13,7 +14,8 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { user, loading } = useUser();
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-
+    console.log("User in Navbar:", user);
+    
     return (
         <>
             <nav className="fixed left-1/2 -translate-x-1/2 top-4 w-[95%] sm:w-[90%] rounded-xl lg:rounded-full bg-[#334727]/10 backdrop-blur-md border border-white/10 shadow-md px-3 sm:px-4 py-3 z-50">
@@ -21,9 +23,16 @@ const Navbar = () => {
                     {/* Profile (left on mobile, right on desktop) */}
                     <div className="md:hidden order-1 md:order-3 flex items-center ml-0 md:ml-auto mr-2">
                         <ProfileDropdownMenu setModalOpen={setIsLogoutModalOpen}>
-                            <button className="w-fit border-4 border-[#a8b79e] bg-[#334727] hover:bg-[#435f37] rounded-full ">
-                                <Image src="/placeholder/profile.jpg" alt="Logo" width={30} height={30} className=" rounded-full" />
-                            </button>
+                            <Avatar
+                                src={user?.profile_picture}
+                                alt={user ? `${user.firstName} ${user.lastName}` : 'Profile'}
+                                size="md"
+                                className="cursor-pointer hover:scale-105 transition-transform duration-200 border-1 border-[#a8b79e]"
+                                classNames={{
+                                    base: "bg-gradient-to-br from-[#334727] to-[#435f37]",
+                                    img: "object-cover"
+                                }}
+                            />
                         </ProfileDropdownMenu>
                     </div>
 
@@ -60,9 +69,15 @@ const Navbar = () => {
                         {!loading && (
                             user ? (
                                 <ProfileDropdownMenu setModalOpen={setIsLogoutModalOpen}>
-                                    <button className="w-fit border-4 border-[#a8b79e] bg-[#334727] hover:bg-[#435f37] rounded-full ">
-                                        <Image src="/placeholder/profile.jpg" alt="Logo" width={40} height={40} className=" rounded-full" />
-                                    </button>
+                                    <Avatar
+                                        src={user?.profile_picture || '/placeholder/profile.jpg'}
+                                        alt={user ? `${user.firstName} ${user.lastName}` : 'Profile'}
+                                        className="size-12 cursor-pointer hover:scale-105 transition-transform duration-200 border-4 border-[#a8b79e]"
+                                        classNames={{
+                                            base: "bg-gradient-to-br from-[#334727] to-[#435f37]",
+                                            img: "object-cover"
+                                        }}
+                                    />
                                 </ProfileDropdownMenu>
                             ) : (
                                 <Link href="/login" className="bg-[#334727] hover:bg-[#435f37] text-white transition-all font-medium lg:text-md px-3 lg:px-5 py-1.5 lg:py-2 rounded-full">

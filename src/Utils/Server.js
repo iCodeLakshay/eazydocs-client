@@ -43,11 +43,35 @@ export const logout = async () => {
 }
 
 export const updateUserProfile = async (userId, updatedData) => {
-    try{
-        const response = await axiosInstance.put(`/api/user/${userId}`, updatedData);
+    try {
+        const formData = new FormData();
+        
+        // Add all text fields to FormData
+        Object.keys(updatedData).forEach(key => {
+            if (key === 'profile_picture') {
+                // Handle file separately
+                if (updatedData[key] instanceof File) {
+                    formData.append('profile_picture_file', updatedData[key]);
+                }
+            } else if (key === 'social_links' || key === 'topics') {
+                // Handle arrays by converting to JSON string
+                formData.append(key, JSON.stringify(updatedData[key]));
+            } else if (updatedData[key] !== null && updatedData[key] !== undefined) {
+                formData.append(key, updatedData[key]);
+            }
+        });
+
+        const response = await axiosInstance.put(`/api/user/${userId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        
         return response.data;
-    }catch(error){
-        console.error("Error updating user profile", error);
-        return null;
+    } catch (error) {
+        if (error.response?.data?.error) {
+            throw new Error(error.response.data.error);
+        }
+        throw new Error('Failed to update profile');
     }
 }

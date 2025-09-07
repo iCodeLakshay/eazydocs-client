@@ -197,3 +197,7 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+img{
+  opacity: 1 !important;
+}
