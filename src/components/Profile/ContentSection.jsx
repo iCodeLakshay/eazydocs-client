@@ -1,61 +1,22 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, CardBody } from "@heroui/card"
 import { Badge } from "@heroui/badge"
 import { Chip } from "@heroui/chip"
 import { Pin, Calendar, Clock, ArrowRight, Star } from 'lucide-react'
 import Link from 'next/link'
+import { formatDateTime, getBlogsByAuthorId } from '@/Utils/Server'
 
 const ContentSection = ({user}) => {
-  // Mock data for recent blogs
-  const recentBlogs = [
-    {
-      id: 1,
-      title: "Building Scalable React Applications with Clean Architecture",
-      date: "2024-03-15",
-      readTime: "8 min read",
-      snippet: "Learn how to structure React applications for maintainability and scalability using clean architecture principles...",
-      category: "React",
-      views: "2.1K"
-    },
-    {
-      id: 2,
-      title: "Node.js Performance Optimization: A Complete Guide",
-      date: "2024-03-10",
-      readTime: "12 min read",
-      snippet: "Discover advanced techniques to optimize your Node.js applications for better performance and reliability...",
-      category: "Node.js",
-      views: "1.8K"
-    },
-    {
-      id: 3,
-      title: "Understanding Database Design Patterns for Modern Apps",
-      date: "2024-03-05",
-      readTime: "15 min read",
-      snippet: "Explore essential database design patterns that will help you build robust and efficient applications...",
-      category: "Database",
-      views: "3.2K"
+  const [recentBlogs, setRecentBlogs] = useState([]);
+
+  useEffect(() => {
+    if (user?.id) {
+      getBlogsByAuthorId(user.id).then((blogs) => {
+        setRecentBlogs(Array.isArray(blogs) ? blogs : []);
+      });
     }
-  ]
-
-  // Mock data for featured post
-  const featuredPost = {
-    id: 1,
-    title: "The Ultimate Guide to Modern Web Development",
-    date: "2024-02-20",
-    readTime: "20 min read",
-    snippet: "A comprehensive guide covering everything from frontend frameworks to deployment strategies for modern web applications.",
-    category: "Web Development",
-    views: "5.4K",
-    likes: "240"
-  }
-
-  // Categories/Tags - use user's topics if available, otherwise default ones
-  const categories = [
-    "React", "Node.js", "JavaScript", "Python", "Database", "DevOps", 
-    "Web Development", "Mobile Development", "AI/ML", "Cloud Computing"
-  ]
-  const displayTopics = user?.topics && user.topics.length > 0 ? user.topics : categories
+  }, [user?.id]);
 
   return (
     <div className="w-full space-y-8 mt-8">
@@ -68,41 +29,47 @@ const ContentSection = ({user}) => {
           </h2>
           
           <div className="space-y-4">
-            {recentBlogs.map((blog, index) => (
+            {recentBlogs.slice(0, 4).map((blog, index) => (
               <div 
-                key={blog.id}
+                key={index}
                 className="border-l-4 rounded-[8px] border-[#2b3824] pl-4 py-3 hover:bg-gray-50 transition duration-200 rounded-r-lg"
               >
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
                   <div className="flex-grow space-y-2">
                     <div className="flex items-center gap-2">
-                      <Chip size="sm" variant="flat" className="bg-[#2b3824]/20 px-3 text-[#2b3824] font-medium">
-                        {blog.category}
-                      </Chip>
+                      {Array.isArray(blog.tags) && blog.tags.map((tag, idx) => (
+                        <Chip
+                          key={idx}
+                          size="sm"
+                          variant="flat"
+                          className="bg-[#2b3824]/20 px-3 text-[#2b3824] font-medium"
+                        >
+                          {tag}
+                        </Chip>
+                      ))}
                     </div>
-                    
+
                     <h3 className="text-lg font-semibold text-gray-900 hover:text-[#2b3824] transition duration-200 cursor-pointer">
                       {blog.title}
                     </h3>
                     
                     <p className="text-gray-600 text-sm leading-relaxed">
-                      {blog.snippet}
+                      {blog.subtitle}
                     </p>
                     
                     <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
-                        <span>{blog.date}</span>
+                        <span>{formatDateTime(blog.created_at)}</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      {/* <div className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
-                        <span>{blog.readTime}</span>
-                      </div>
-                      <span>{blog.views} views</span>
+                        <span>{blog.read_time}</span>
+                      </div> */}
                     </div>
                   </div>
                   
-                  <Link href={`/blog/${blog.id}`}>
+                  <Link href={`/blog/${blog.slug}`} className='mr-5'>
                     <button className="flex items-center gap-1 px-3 py-1 text-[#2b3824] hover:bg-[#384d2d] hover:text-white font-medium rounded-lg transition duration-200 text-sm whitespace-nowrap">
                       Read
                       <ArrowRight className="w-3 h-3" />
@@ -115,7 +82,7 @@ const ContentSection = ({user}) => {
           
           {/* View All Posts Link */}
           <div className="mt-6 text-center">
-            <Link href="/author/posts">
+            <Link href={`/author/posts/${user.id}`}>
               <button className="px-6 py-2 border-2 border-[#2b3824] text-[#2b3824] font-medium rounded-lg hover:bg-[#384d2d] hover:text-white transition duration-200">
                 View All Posts
               </button>
@@ -133,13 +100,13 @@ const ContentSection = ({user}) => {
           </h2>
           
           <div className="flex flex-wrap gap-2">
-            {displayTopics.map((category, index) => (
+            {user.topics.map((topic, index) => (
               <Chip
                 key={index}
                 variant="flat"
                 className="bg-[#2b3824]/10 text-[#2b3824] hover:bg-[#384d2d] hover:text-white transition duration-200 cursor-pointer font-medium px-2 py-1"
               >
-                {category}
+                {topic}
               </Chip>
             ))}
           </div>

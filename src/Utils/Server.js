@@ -75,3 +75,35 @@ export const updateUserProfile = async (userId, updatedData) => {
         throw new Error('Failed to update profile');
     }
 }
+
+export const getBlogsByAuthorId = async (authorId) => {
+    try {
+        const response = await axiosInstance.get(`/api/blogs/${authorId}`);        
+        return response.data.blogs || [];
+    } catch (error) {
+        console.error("Error fetching blogs by author ID", error);
+        return [];
+    }
+}
+
+export const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
+    const pad = (n) => n.toString().padStart(2, '0');
+    let hours = date.getHours();
+    const minutes = pad(date.getMinutes());
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Convert to 12hr format, 0 becomes 12
+    const day = pad(date.getDate());
+    const month = pad(date.getMonth() + 1);
+    const year = date.getFullYear().toString().slice(-2);
+    return `${pad(hours)}:${minutes} ${ampm} ${day}/${month}/${year}`;
+};
+
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const pad = (n) => n.toString().padStart(2, '0');
+    const day = pad(date.getDate());
+    const month = pad(date.getMonth() + 1);
+    const year = date.getFullYear().toString().slice(-2);
+    return `${day}/${month}/${year}`;
+};

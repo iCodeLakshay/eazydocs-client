@@ -2,20 +2,22 @@
 import React from 'react'
 import { Card, CardBody } from "@heroui/card"
 import { Mail, Globe, Github, Twitter, Calendar, FileText, Users, TrendingUp } from 'lucide-react'
+import { formatDate, formatDateTime } from '@/Utils/Server'
 
 const MiddleSection = ({user}) => {
-  const contactLinks = [
-    { icon: Mail, label: 'Email', value: 'john@example.com', href: 'mailto:john@example.com' },
-    { icon: Globe, label: 'Website', value: 'johndoe.dev', href: 'https://johndoe.dev' },
-    { icon: Github, label: 'GitHub', value: 'johndoe', href: 'https://github.com/johndoe' },
-    { icon: Twitter, label: 'Twitter', value: '@johndoe_dev', href: 'https://twitter.com/johndoe_dev' }
-  ]
-
+  // const contactLinks = [
+  //   { icon: Mail, label: 'Email', value: 'john@example.com', href: 'mailto:john@example.com' },
+  //   { icon: Globe, label: 'Website', value: 'johndoe.dev', href: 'https://johndoe.dev' },
+  //   { icon: Github, label: 'GitHub', value: 'johndoe', href: 'https://github.com/johndoe' },
+  //   { icon: Twitter, label: 'Twitter', value: '@johndoe_dev', href: 'https://twitter.com/johndoe_dev' }
+  // ]
+  console.log("User in MiddleSection:", user);
+  
   const stats = [
-    { icon: FileText, label: 'Total Posts', value: '42' },
-    { icon: Users, label: 'Followers', value: '1.2K' },
-    { icon: TrendingUp, label: 'Views', value: '25.6K' },
-    { icon: Calendar, label: 'Joined', value: 'Jan 2023' }
+    { icon: FileText, label: 'Total Posts', value: user.blogs.length },
+    { icon: Users, label: 'Followers', value: user.followers || '1.2K' },
+    { icon: TrendingUp, label: 'Views', value: user.views || '25.6K' },
+    { icon: Calendar, label: 'Joined', value: formatDate(user.created_at) || 'Jan 2025' }
   ]
 
   return (
