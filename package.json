@@ -9,13 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@heroui/dropdown": "^2.3.24",
-    "@heroui/system": "^2.4.20",
-    "@heroui/theme": "^2.4.20",
     "@heroui/avatar": "^2.2.21",
     "@heroui/badge": "^2.2.16",
     "@heroui/card": "^2.2.24",
     "@heroui/chip": "^2.2.21",
+    "@heroui/dropdown": "^2.3.24",
+    "@heroui/input": "^2.4.27",
+    "@heroui/select": "^2.4.27",
+    "@heroui/system": "^2.4.20",
+    "@heroui/theme": "^2.4.20",
     "aos": "^3.0.0-beta.6",
     "audit": "^0.0.6",
     "axios": "^1.11.0",

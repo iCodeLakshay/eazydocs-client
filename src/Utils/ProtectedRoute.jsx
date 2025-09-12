@@ -1,7 +1,7 @@
 import { useUser } from "@/Utils/userContext";
-import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import UserRetrivingLoader from "@/components/Others/UserRetrivingLoader";
 
 export default function ProtectedRoute({ children }) {
   const { user, loading } = useUser();
@@ -13,8 +13,8 @@ export default function ProtectedRoute({ children }) {
     }
   }, [user, loading, router]);
 
-  if (loading) return <div><LoaderCircle className="size-5 animate-spin" /></div>;
-  if (!user) return null; // Or a spinner
+  if (loading) return <UserRetrivingLoader />;
+  if (!user) return null; // Will redirect in useEffect
 
   return children;
 }
