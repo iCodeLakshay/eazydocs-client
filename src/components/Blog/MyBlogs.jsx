@@ -26,6 +26,10 @@ const MyBlogs = () => {
     return matchesSearch && matchesCategory
   })
 
+  const handleDeleteBlog = (deletedBlogId) => {
+    setBlogs(prevBlogs => prevBlogs.filter(blog => blog.id !== deletedBlogId))
+  }
+
   useEffect(() => {
     const fetchBlogs = async () => {
       if (user?.id) {
@@ -188,7 +192,11 @@ const MyBlogs = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                 {filteredBlogs.map((blog, index) => (
-                  <BlogCard key={blog.id || index} blog={blog} />
+                  <BlogCard 
+                    key={blog.id || index} 
+                    blog={blog} 
+                    onDelete={handleDeleteBlog}
+                  />
                 ))}
               </div>
             )}

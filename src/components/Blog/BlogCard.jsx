@@ -1,21 +1,60 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardBody } from "@heroui/card"
 import { Chip } from "@heroui/chip"
 import { Avatar } from "@heroui/avatar"
-import { Clock } from 'lucide-react'
+import { Clock, Trash2 } from 'lucide-react'
 import Link from 'next/link'
-import { formatDate } from '@/Utils/Server'
+import { formatDate, deleteBlogById } from '@/Utils/Server'
+import DeleteConfirmModal from '../Others/DeleteConfirmModal'
+import ApprovalStatus from '../Others/ApprovalStatus'
 
-const BlogCard = ({ blog, variant = "default" }) => {
+const BlogCard = ({ blog, variant = "default", onDelete }) => {
     // Extract author info from the populated users field
     const author = blog.users || {}
     const displayTags = blog.tags?.slice(0, 3) || []
+    
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false)
+
+    const handleDeleteClick = () => {
+        setIsDeleteModalOpen(true)
+    }
+
+    const handleConfirmDelete = async () => {
+        try {
+            setIsDeleting(true)
+            const result = await deleteBlogById(blog.id, blog.author)
+            if (result) {
+                // Call the onDelete callback to refresh the blog list
+                if (onDelete) {
+                    onDelete(blog.id)
+                }
+                setIsDeleteModalOpen(false)
+            } else {
+                alert('Failed to delete blog. Please try again.')
+            }
+        } catch (error) {
+            console.error('Error deleting blog:', error)
+            alert('Error deleting blog. Please try again.')
+        } finally {
+            setIsDeleting(false)
+        }
+    }
 
     if (variant === "compact") {
         return (
-            <Card className="hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+            <Card className="hover:shadow-lg transition-shadow duration-300 border border-gray-100 relative group">
                 <CardBody className="p-3 sm:p-4">
+                    {/* Delete Button */}
+                    <button
+                        onClick={handleDeleteClick}
+                        className="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center z-10"
+                        title="Delete blog"
+                    >
+                        <Trash2 className="w-3 h-3" />
+                    </button>
+
                     <div className="flex gap-3 sm:gap-4">
                         {/* Banner Image */}
                         <div className="w-16 h-16 sm:w-24 sm:h-24 flex-shrink-0">
@@ -50,16 +89,24 @@ const BlogCard = ({ blog, variant = "default" }) => {
                             </Link>
 
                             {/* Author and Date */}
-                            <div className="flex items-center gap-1 sm:gap-2 text-xs text-gray-600">
-                                <Avatar
-                                    src={author.profile_picture || '/placeholder/profile.jpg'}
-                                    alt={author.name}
-                                    size="sm"
-                                    className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0"
+                            <div className="flex items-center justify-between gap-1 sm:gap-2 text-xs text-gray-600">
+                                <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+                                    <Avatar
+                                        src={author.profile_picture || '/placeholder/profile.jpg'}
+                                        alt={author.name}
+                                        size="sm"
+                                        className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0"
+                                    />
+                                    <span className="truncate">{author.name}</span>
+                                    <span className="flex-shrink-0">•</span>
+                                    <span className="flex-shrink-0">{formatDate(blog.created_at)}</span>
+                                </div>
+                                <ApprovalStatus 
+                                    approved={blog.approved} 
+                                    isPublished={blog.isPublished}
+                                    size="small"
+                                    showText={false}
                                 />
-                                <span className="truncate">{author.name}</span>
-                                <span className="flex-shrink-0">•</span>
-                                <span className="flex-shrink-0">{formatDate(blog.created_at)}</span>
                             </div>
                         </div>
                     </div>
@@ -69,8 +116,18 @@ const BlogCard = ({ blog, variant = "default" }) => {
     }
 
     return (
-        <Card className="hover:shadow-xl transition-all duration-300 border-2 border-gray-200 rounded-lg hover:border-[#334727]/20">
+        <>
+        <Card className="hover:shadow-xl transition-all duration-300 border-2 border-gray-200 rounded-lg hover:border-[#334727]/20 relative group">
             <CardBody className="p-0">
+                {/* Delete Button */}
+                <button
+                    onClick={handleDeleteClick}
+                    className="absolute top-3 right-3 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center z-10 shadow-lg"
+                    title="Delete blog"
+                >
+                    <Trash2 className="w-4 h-4" />
+                </button>
+
                 {/* Banner Image */}
                 <div className="relative h-40 sm:h-48 w-full overflow-hidden rounded-t-lg">
                     <img
@@ -100,9 +157,17 @@ const BlogCard = ({ blog, variant = "default" }) => {
                             </div>
                         </div>
                         </div>
+                        <div className="flex items-center gap-2">
+                            <ApprovalStatus 
+                                approved={blog.approved} 
+                                isPublished={blog.isPublished}
+                                size="small"
+                                showText={false}
+                            />
                             <span className="text-xs sm:text-sm text-gray-500 self-start sm:self-auto">
                                 {formatDate(blog.created_at)}
                             </span>
+                        </div>
                     </div>
 
                     {/* Title */}
@@ -135,6 +200,15 @@ const BlogCard = ({ blog, variant = "default" }) => {
                 </div>
             </CardBody>
         </Card>
+        
+        <DeleteConfirmModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onConfirm={handleConfirmDelete}
+            blogTitle={blog.title}
+            loading={isDeleting}
+        />
+        </> 
     )
 }
 

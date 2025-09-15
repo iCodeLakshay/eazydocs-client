@@ -11,11 +11,16 @@
   "dependencies": {
     "@heroui/avatar": "^2.2.21",
     "@heroui/badge": "^2.2.16",
+    "@heroui/button": "^2.2.26",
     "@heroui/card": "^2.2.24",
+    "@heroui/checkbox": "^2.3.26",
     "@heroui/chip": "^2.2.21",
     "@heroui/dropdown": "^2.3.24",
     "@heroui/input": "^2.4.27",
+    "@heroui/ripple": "^2.2.19",
     "@heroui/select": "^2.4.27",
+    "@heroui/spinner": "^2.2.23",
+    "@heroui/switch": "^2.2.23",
     "@heroui/system": "^2.4.20",
     "@heroui/theme": "^2.4.20",
     "aos": "^3.0.0-beta.6",
@@ -27,6 +32,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hot-toast": "^2.6.0",
+    "react-quill-new": "^3.6.0",
     "swiper": "^11.2.10"
   },
   "devDependencies": {

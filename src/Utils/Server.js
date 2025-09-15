@@ -107,3 +107,29 @@ export const formatDate = (dateString) => {
     const year = date.getFullYear().toString().slice(-2);
     return `${day}/${month}/${year}`;
 };
+
+export const deleteBlogById = async (blogId, authorId) => {
+    try {
+        const response = await axiosInstance.delete(`/api/blogs/${blogId}`, {
+            data: { authorId }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting blog", error);
+        return null;
+    }
+};
+
+export const createBlog = async (blogData) => {
+    try {
+        const response = await axiosInstance.post("/api/blogs", blogData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error creating blog", error);
+        return null;
+    }
+}
