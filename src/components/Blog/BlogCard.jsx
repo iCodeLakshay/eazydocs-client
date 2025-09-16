@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { formatDate, deleteBlogById } from '@/Utils/Server'
 import DeleteConfirmModal from '../Others/DeleteConfirmModal'
 import ApprovalStatus from '../Others/ApprovalStatus'
+import toast from 'react-hot-toast'
 
 const BlogCard = ({ blog, variant = "default", onDelete }) => {
     // Extract author info from the populated users field
@@ -31,12 +32,12 @@ const BlogCard = ({ blog, variant = "default", onDelete }) => {
                     onDelete(blog.id)
                 }
                 setIsDeleteModalOpen(false)
+                toast.success('Blog deleted successfully.')
             } else {
-                alert('Failed to delete blog. Please try again.')
+                toast.error('Failed to delete blog. Please try again.')
             }
         } catch (error) {
-            console.error('Error deleting blog:', error)
-            alert('Error deleting blog. Please try again.')
+            toast.error('Error deleting blog. Please try again.')
         } finally {
             setIsDeleting(false)
         }

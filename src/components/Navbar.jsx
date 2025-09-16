@@ -14,7 +14,7 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { user, loading } = useUser();
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-    console.log("User in Navbar:", user);
+    // console.log("User in Navbar:", user);
     
     return (
         <>

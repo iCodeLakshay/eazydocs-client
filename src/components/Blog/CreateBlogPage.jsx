@@ -19,38 +19,16 @@ import {
     BookCheck
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import dynamic from 'next/dynamic';
 import { createBlog } from '@/Utils/Server';
-
-// Dynamically import ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill-new'), { 
-    ssr: false,
-    loading: () => <div className="h-40 bg-gray-100 rounded-lg flex items-center justify-center">
-        <Spinner size="lg" />
-    </div>
-});
-
-// Import CSS in useEffect to avoid SSR issues
-const useQuillStyles = () => {
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            import('react-quill-new/dist/quill.snow.css');
-        }
-    }, []);
-};
+import TipTapTextEditor from './TipTapTextEditor';
 
 
 const CreateBlogPage = () => {
     const { user } = useUser();
-    const [isMounted, setIsMounted] = useState(false);
-    
-    // Load Quill styles and set mounted state
-    useQuillStyles();
-    
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-    
+    const [tagInput, setTagInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+
     // Form state
     const [formData, setFormData] = useState({
         title: '',
@@ -62,30 +40,6 @@ const CreateBlogPage = () => {
         isPublished: false,
         approved: true // by default for demo
     });
-    
-    const [tagInput, setTagInput] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [errors, setErrors] = useState({});
-    
-    // Quill configuration
-    const quillModules = {
-        toolbar: [
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            [{ 'size': ['small', false, 'large', 'huge'] }],
-            ['bold', 'italic', 'underline'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['blockquote'],
-            ['link']
-        ],
-    };
-    
-    const quillFormats = [
-        'header', 'size',
-        'bold', 'italic', 'underline',
-        'list',
-        'blockquote',
-        'link'
-    ];
 
     // Handle input changes
     const handleInputChange = (field, value) => {
@@ -222,6 +176,9 @@ const CreateBlogPage = () => {
             submitData.append('title', formData.title);
             submitData.append('subtitle', formData.subtitle);
             submitData.append('content', formData.content);
+            if (formData.banner_image) {
+                submitData.append('banner_image', formData.banner_image);
+            }
             submitData.append('tags', JSON.stringify(formData.tags));
             submitData.append('isPublished', formData.isPublished);
             submitData.append('author', user.id);
@@ -356,24 +313,12 @@ const CreateBlogPage = () => {
                                         </label>
                                         <Card className="border-2 border-gray-200 overflow-hidden rounded-2xl shadow-sm">
                                             <CardBody className="p-0">
-                                                {isMounted ? (
-                                                    <ReactQuill
-                                                        theme="snow"
-                                                        value={formData.content}
-                                                        onChange={(value) => handleInputChange('content', value)}
-                                                        modules={quillModules}
-                                                        formats={quillFormats}
-                                                        placeholder="Start writing your blog content here... Share your insights, tutorials, and knowledge with the community."
-                                                        style={{ height: '400px' }}
-                                                    />
-                                                ) : (
-                                                    <div className="h-96 bg-gray-100 flex items-center justify-center rounded-2xl">
-                                                        <Spinner size="lg" color="primary" />
-                                                    </div>
-                                                )}
+                                                <TipTapTextEditor
+                                                    value={formData.content}
+                                                    onChange={(html) => handleInputChange('content', html)}
+                                                />
                                             </CardBody>
                                         </Card>
-                                        <div style={{ marginBottom: '50px' }}></div>
                                         {errors.content && (
                                             <p className="text-red-600 text-sm mt-2 flex items-center gap-1">
                                                 <span className="w-1 h-1 bg-red-600 rounded-full"></span>
@@ -436,12 +381,11 @@ const CreateBlogPage = () => {
                                     <Button
                                         type="submit"
                                         color="primary"
-                                        isLoading={isLoading}
                                         startContent={formData.isPublished ? <Eye className="w-4 h-4" /> : <BookCheck className="w-4 h-4" />}
-                                        className="bg-gradient-to-r from-[#334727] to-[#2a3d20] hover:from-[#2a3d20] hover:to-[#1e2b16] w-full sm:w-auto shadow-lg rounded-lg text-white"
+                                        className={`${isLoading ? 'opacity-50 cursor-not-allowed' : ''} bg-gradient-to-r from-[#334727] to-[#2a3d20] hover:from-[#2a3d20] hover:to-[#1e2b16] w-full sm:w-auto shadow-lg rounded-lg text-white`}
                                         size="lg"
                                     >
-                                        {formData.isPublished ? 'Publish Blog' : 'Publish Now'}
+                                        {isLoading ? 'Publishing...' : 'Publish Now'}
                                     </Button>
                                 </div>
                             </div>
