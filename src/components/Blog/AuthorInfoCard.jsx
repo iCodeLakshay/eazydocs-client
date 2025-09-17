@@ -33,12 +33,12 @@ const AuthorInfoCard = ({ user }) => {
                         </div>
                     </div>
                     
-                    <div className="text-right">
+                    {/* <div className="text-right">
                         <div className="inline-flex items-center gap-1 px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium">
                             <CheckCircle className="w-3 h-3" />
                             <span>Verified Author</span>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </CardBody>
         </Card>

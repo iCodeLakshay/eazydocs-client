@@ -17,14 +17,14 @@ export const login = async(identifier, password) => {
         const response = await axiosInstance.post("/api/auth/login", { identifier, password });
         return response.data;
     } catch (error) {
-        console.error("Error logging in", error);
-        return null;
+        const message = error.response?.data?.error || "Login failed";
+        throw new Error(message);
     }
 }
 
-export const signup = async(email, password, name, phone_number) => {
+export const signup = async(email, password, name, phone_number, username) => {
     try {
-        const response = await axiosInstance.post("/api/auth/signup", { email, password, name, phone_number });
+        const response = await axiosInstance.post("/api/auth/signup", { email, password, name, phone_number, username });
         return response.data;
     } catch (error) {
         console.error("Error signing up", error);
@@ -131,5 +131,19 @@ export const createBlog = async (blogData) => {
     } catch (error) {
         console.error("Error creating blog", error);
         return null;
+    }
+}
+
+export const checkUsernameAvailability = async (username) => {
+    try {
+        console.log("Checking availability for username:", username);
+        
+        const response = await axiosInstance.get(`/api/user/check-username/${username}`);
+        console.log("Username availability check:", response.data);
+        
+        return response.data;
+    } catch (error) {
+        const message = error.response?.data?.error || "Error checking username availability";
+        throw new Error(message);
     }
 }

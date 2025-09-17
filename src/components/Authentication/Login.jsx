@@ -5,6 +5,7 @@ import { Eye, EyeOff, Mail, Lock, ArrowLeft, LogIn } from 'lucide-react'
 import { login } from '@/Utils/Server'
 import ForgotPasswordModal from './ForgotPasswordModal'
 import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
     const [showForgotPassword, setShowForgotPassword] = useState(false)
+    const router = useRouter();
 
     const handleChange = (e) => {
         setFormData({
@@ -30,12 +32,12 @@ const Login = () => {
             const result = await login(formData.identifier, formData.password)
             if (result) {
                 toast.success('Logged in successfully!')
-                window.location.href = '/'
+                router.push('/');
             } else {
                 toast.error('Invalid credentials. Please try again.')
             }
         } catch (err) {
-            toast.error('Something went wrong. Please try again.')
+            toast.error('Invalid credentials. Please try again.')
         } finally {
             setLoading(false)
         }
@@ -99,9 +101,8 @@ const Login = () => {
                         <div className="text-right">
                             <button
                                 type="button"
-                                disabled={true}
                                 onClick={() => setShowForgotPassword(true)}
-                                className="cursor-not-allowed text-white/80 hover:text-white transition-colors text-sm underline"
+                                className="text-white/80 hover:text-white transition-colors text-sm"
                             >
                                 Forgot Password?
                             </button>

@@ -620,7 +620,7 @@ export default function TipTapTextEditor({ value = "", onChange }) {
           margin: 0.75rem 0;
           line-height: 1;
         }
-        :global(pre) {
+        :global(.ProseMirror pre) {
           background: #111827;
           color: #f9fafb;
           border-radius: 0.75rem;
@@ -629,7 +629,7 @@ export default function TipTapTextEditor({ value = "", onChange }) {
           margin: 1rem 0;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        :global(code) {
+        :global(.ProseMirror code) {
           background: #f1f5f9;
           color: #e11d48;
           padding: 0.125rem 0.375rem;
@@ -637,7 +637,7 @@ export default function TipTapTextEditor({ value = "", onChange }) {
           font-family: 'Fira Code', 'Monaco', 'Cascadia Code', monospace;
           font-size: 0.9em;
         }
-        :global(blockquote) {
+        :global(.ProseMirror blockquote) {
           border-left: 4px solid #334727;
           background: linear-gradient(to right, #f8fafc, #ffffff);
           padding: 1rem 1.5rem;
@@ -647,43 +647,43 @@ export default function TipTapTextEditor({ value = "", onChange }) {
           font-style: italic;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        :global(ul), :global(ol) {
+        :global(.ProseMirror ul), :global(.ProseMirror ol) {
           padding-left: 1.5rem;
           margin: 1rem 0;
         }
-        :global(ul) {
+        :global(.ProseMirror ul) {
           list-style-type: disc;
         }
-        :global(ol) {
+        :global(.ProseMirror ol) {
           list-style-type: decimal;
         }
-        :global(ul li), :global(ol li) {
+        :global(.ProseMirror ul li), :global(.ProseMirror ol li) {
           margin: 0.5rem 0;
           line-height: 1.6;
           display: list-item;
         }
-        :global(ul ul) {
+        :global(.ProseMirror ul ul) {
           list-style-type: circle;
         }
-        :global(ul ul ul) {
+        :global(.ProseMirror ul ul ul) {
           list-style-type: square;
         }
-        :global(a) {
+        :global(.ProseMirror a) {
           color: #334727;
           text-decoration: underline;
           text-underline-offset: 2px;
           transition: all 0.2s;
         }
-        :global(a:hover) {
+        :global(.ProseMirror a:hover) {
           color: #2a3d20;
           text-decoration-thickness: 2px;
         }
-        :global(mark) {
+        :global(.ProseMirror mark) {
           background: #fef08a;
           padding: 0.1em 0.2em;
           border-radius: 0.25rem;
         }
-        :global(hr) {
+        :global(.ProseMirror hr) {
           border: none;
           height: 2px;
           background: linear-gradient(to right, transparent, #d1d5db, transparent);
